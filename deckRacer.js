@@ -47,42 +47,29 @@ function isval (){
     return deck;
 }
 
-function twoplayerstart (){
+function oneplayerstart (){
     let playerone = -1
+    return playerone;
+}
+
+function twoplayerstart (){
     let playertwo = -1
-    return playerone, playertwo;
+    return playertwo;
 }
 
-function startgame (){
-    let deck = isval();
-    let x = roll();
-    return deck, x;
+
+function takeaturnone (){
+    let dice = roll();
+    let positionone = oneplayerstart();
+    positionOneEnd = positionone + dice
 }
 
-function playeronego (){
-    for(i=0; i<deck.length; i++){
-        if(x>deck && position<26){
-            position++
-        }
-        else(playertwogo())
-    }
+function takeaturntwo (positione){
+    let dice = roll();
+    let positiontwo = twoplayerstart();
 }
 
-function playertwogo (){
-    for(i=0; i<deck.length; i++){
-        if(x>deck && position<26){
-            position++
-        }
-        else(playeronego())
-    }
-}
-
-function game () {
-    startgame()
-    playeronego()
-}
-
-console.log(game())
+console.log()
 
 
 //junk code:
@@ -98,3 +85,31 @@ console.log(game())
     //     }
     // }
     // return deck;
+    // function startgame (){
+    //     let deck = isval();
+    //     let x = roll();
+    //     return deck, x;
+    // }
+    
+    // function playeronego (){
+    //     for(i=0; i<deck.length; i++){
+    //         if(x>deck && position<26){
+    //             position++
+    //         }
+    //         else(playertwogo())
+    //     }
+    // }
+    
+    // function playertwogo (){
+    //     for(i=0; i<deck.length; i++){
+    //         if(x>deck && position<26){
+    //             position++
+    //         }
+    //         else(playeronego())
+    //     }
+    // }
+    
+    // function game () {
+    //     startgame()
+    //     playeronego()
+    // }
