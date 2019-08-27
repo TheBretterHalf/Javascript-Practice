@@ -53,12 +53,36 @@ function twoplayerstart (){
     return playerone, playertwo;
 }
 
-function playgame (){
+function startgame (){
+    let deck = isval();
     let x = roll();
-    
+    return deck, x;
 }
 
-console.log(isval())
+function playeronego (){
+    for(i=0; i<deck.length; i++){
+        if(x>deck && position<26){
+            position++
+        }
+        else(playertwogo())
+    }
+}
+
+function playertwogo (){
+    for(i=0; i<deck.length; i++){
+        if(x>deck && position<26){
+            position++
+        }
+        else(playeronego())
+    }
+}
+
+function game () {
+    startgame()
+    playeronego()
+}
+
+console.log(game())
 
 
 //junk code:
