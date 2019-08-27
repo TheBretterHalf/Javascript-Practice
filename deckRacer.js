@@ -36,4 +36,41 @@ function shuffle()
     return deck;
 }
 
-console.log(shuffle())
+function isval (){
+    let deck = shuffle();
+    do {
+        deck = shuffle();
+    }
+    while (
+        deck[0].Value == 'A' || deck[0].Value == '2' || deck[0].Value == '6' || deck[0].Value == '7' || deck[1].Value == 'A' || deck[1].Value == '2' || deck[1].Value == '6' || deck[1].Value == '7' || deck[26].Value == 'A' || deck[26].Value == '2' || deck[26].Value == '6' || deck[26].Value == '7' || deck[27].Value == 'A' || deck[27].Value == '2' || deck[27].Value == '6' || deck[27].Value == '7'
+    )
+    return deck;
+}
+
+function twoplayerstart (){
+    let playerone = -1
+    let playertwo = -1
+    return playerone, playertwo;
+}
+
+function playgame (){
+    let x = roll();
+    
+}
+
+console.log(isval())
+
+
+//junk code:
+    // //console.log(deck)
+    // for (i = 0; i < deck.length; i++){
+    //     //console.log(deck[i].Value)
+    //     if (deck[i].Value == 'A' || deck[i].Value == '2' || deck[i].Value == '6' || deck[i].Value == '7'){
+    //         if (i<2 || i>26){
+    //             let deck = shuffle();
+    //             console.log("reshuffled")
+    //             isval();
+    //         } 
+    //     }
+    // }
+    // return deck;
