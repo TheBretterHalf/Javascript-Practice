@@ -1,6 +1,6 @@
 var deck = new Array();
 var suits = ["spades", "diamonds", "clubs", "hearts"];
-var values = ["A", "2", "3", "4", "5", "6", "7"];
+var values = ["1", "2", "3", "4", "5", "6", "7"];
 
 function roll (){
     let x=((Math.floor(Math.random()*6))+1);
@@ -42,7 +42,7 @@ function isval (){
         deck = shuffle();
     }
     while (
-        deck[0].Value == 'A' || deck[0].Value == '2' || deck[0].Value == '6' || deck[0].Value == '7' || deck[1].Value == 'A' || deck[1].Value == '2' || deck[1].Value == '6' || deck[1].Value == '7' || deck[26].Value == 'A' || deck[26].Value == '2' || deck[26].Value == '6' || deck[26].Value == '7' || deck[27].Value == 'A' || deck[27].Value == '2' || deck[27].Value == '6' || deck[27].Value == '7'
+        deck[0].Value == '1' || deck[0].Value == '2' || deck[0].Value == '6' || deck[0].Value == '7' || deck[1].Value == 'A' || deck[1].Value == '2' || deck[1].Value == '6' || deck[1].Value == '7' || deck[26].Value == 'A' || deck[26].Value == '2' || deck[26].Value == '6' || deck[26].Value == '7' || deck[27].Value == 'A' || deck[27].Value == '2' || deck[27].Value == '6' || deck[27].Value == '7'
     )
     return deck;
 }
@@ -53,18 +53,18 @@ function startgame(){
     return player1, player2;
 }
 
-function start (playerturn){
+function start (){
+    let playerturn = 0;
     let board = isval();
     console.log(board)
     let dice = roll();
     console.log(dice)
     for (let i=0; i<dice; i++){
-        if(board[i].Value > dice){
+        if(board[i].Value < dice){
             playerturn++;
-            return playerturn
         }
-        else{}
     }
+    return playerturn
 }
 
 console.log(start(0))
