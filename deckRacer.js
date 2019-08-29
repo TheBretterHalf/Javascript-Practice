@@ -41,12 +41,12 @@ function isval (){
     do {
         //deck = shuffle();
         shuffle();
-        console.log('shuffled deck ',deck);
+        //console.log('shuffled deck ',deck);
     }
     while (
         deck[0].Value == '1' || deck[0].Value == '2' || deck[0].Value == '6' || deck[0].Value == '7' || deck[1].Value == '1' || deck[1].Value == '2' || deck[1].Value == '6' || deck[1].Value == '7' || deck[26].Value == '1' || deck[26].Value == '2' || deck[26].Value == '6' || deck[26].Value == '7' || deck[27].Value == '1' || deck[27].Value == '2' || deck[27].Value == '6' || deck[27].Value == '7'
     )
-    //return deck;
+    return deck;
 }
 
 //console.log(deck.length);
@@ -57,28 +57,50 @@ function isval (){
 //
 //below add player one, then player two turns to each other and set limiter to # of cards.
 
-//deck = isval();
+deck = isval();
 
-function rollturn (){
-    let playeroneturn = 0;
-    let playertwoturn = 0;
-    //console.log(deck)
-    let dice = roll();
-    console.log(dice)
-    for (let i=0; i<dice; i++){
-        if(deck[i].Value < dice){
+function rollturn (playeroneturn, playertwoturn){
+
+    console.log(deck)
+    let dice1 = roll();
+    console.log("Player1 Roll: ", dice1)
+    for (let i=0; i<dice1; i++){
+        if(deck[i].Value < dice1){
             playeroneturn++;
         }
+        else{
+            break;
+        }
     }
-    if(playeroneturn<dice){
-        playeroneturn+1
+    if (playeroneturn!=dice1){
+        playeroneturn++;
     }
-    console.log(playeroneturn);
-
+    console.log("Player1: ", playeroneturn);
+    let dice2 = roll();
+    console.log("Player2 Roll: ", dice2)
+    for (let i=0; i<dice2; i++){
+        if(deck[i].Value < dice2){
+            playertwoturn++;
+        }
+        else{
+            break;
+        }
+    }
+    if (playertwoturn!=dice2){
+        playertwoturn++;
+    }
+    console.log("Player2: ", playertwoturn);
+    if(playertwoturn>=28 || playeroneturn>=28){
+        console.log("GameOver")
+    }
+    else{
+        rollturn(playeroneturn, playertwoturn);
+    }
+    return "";
 }
 
 
-console.log(rollturn())
+console.log(rollturn(0,0))
 
 
 //junk code:
