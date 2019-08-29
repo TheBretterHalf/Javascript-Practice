@@ -17,12 +17,12 @@ function getDeck()
 			deck.push(card);
 		}
     }
-	return deck;
+	//return deck;
 }
 
 function shuffle()
 {
-    deck = getDeck()
+    //deck = getDeck()
 	for (var i = 0; i < 1000; i++)
 	{
 		var location1 = Math.floor((Math.random() * deck.length));
@@ -32,18 +32,24 @@ function shuffle()
 		deck[location1] = deck[location2];
 		deck[location2] = tmp;
     }
-    return deck;
+    //return deck;
 }
 
 function isval (){
+    getDeck();
+    //console.log('initial deck ',deck);
     do {
-        deck = shuffle();
+        //deck = shuffle();
+        shuffle();
+        console.log('shuffled deck ',deck);
     }
     while (
-        deck[0].Value == '1' || deck[0].Value == '2' || deck[0].Value == '6' || deck[0].Value == '7' || deck[1].Value == 'A' || deck[1].Value == '2' || deck[1].Value == '6' || deck[1].Value == '7' || deck[26].Value == 'A' || deck[26].Value == '2' || deck[26].Value == '6' || deck[26].Value == '7' || deck[27].Value == 'A' || deck[27].Value == '2' || deck[27].Value == '6' || deck[27].Value == '7'
+        deck[0].Value == '1' || deck[0].Value == '2' || deck[0].Value == '6' || deck[0].Value == '7' || deck[1].Value == '1' || deck[1].Value == '2' || deck[1].Value == '6' || deck[1].Value == '7' || deck[26].Value == '1' || deck[26].Value == '2' || deck[26].Value == '6' || deck[26].Value == '7' || deck[27].Value == '1' || deck[27].Value == '2' || deck[27].Value == '6' || deck[27].Value == '7'
     )
-    return deck;
+    //return deck;
 }
+
+//console.log(deck.length);
 
 //find way of keeping board constant
 //
@@ -51,12 +57,12 @@ function isval (){
 //
 //below add player one, then player two turns to each other and set limiter to # of cards.
 
-deck = isval();
+//deck = isval();
 
 function rollturn (){
     let playeroneturn = 0;
     let playertwoturn = 0;
-    console.log(deck)
+    //console.log(deck)
     let dice = roll();
     console.log(dice)
     for (let i=0; i<dice; i++){
@@ -64,7 +70,10 @@ function rollturn (){
             playeroneturn++;
         }
     }
-    console.log(playeroneturn+1);
+    if(playeroneturn<dice){
+        playeroneturn+1
+    }
+    console.log(playeroneturn);
 
 }
 
