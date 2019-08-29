@@ -9,7 +9,6 @@ function roll (){
 
 function getDeck()
 {
-	let deck = new Array();
 	for(var i = 0; i < suits.length; i++)
 	{
 		for(var x = 0; x < values.length; x++)
@@ -23,7 +22,7 @@ function getDeck()
 
 function shuffle()
 {
-    let deck = getDeck();
+    deck = getDeck()
 	for (var i = 0; i < 1000; i++)
 	{
 		var location1 = Math.floor((Math.random() * deck.length));
@@ -37,7 +36,6 @@ function shuffle()
 }
 
 function isval (){
-    let deck = shuffle();
     do {
         deck = shuffle();
     }
@@ -47,27 +45,31 @@ function isval (){
     return deck;
 }
 
-function startgame(){
-    let player1=-1;
-    let player2=-1;
-    return player1, player2;
-}
+//find way of keeping board constant
+//
+//call the roll turn function recursively.
+//
+//below add player one, then player two turns to each other and set limiter to # of cards.
 
-function start (){
-    let playerturn = 0;
-    let board = isval();
-    console.log(board)
+deck = isval();
+
+function rollturn (){
+    let playeroneturn = 0;
+    let playertwoturn = 0;
+    console.log(deck)
     let dice = roll();
     console.log(dice)
     for (let i=0; i<dice; i++){
-        if(board[i].Value < dice){
-            playerturn++;
+        if(deck[i].Value < dice){
+            playeroneturn++;
         }
     }
-    return playerturn
+    console.log(playeroneturn+1);
+
 }
 
-console.log(start(0))
+
+console.log(rollturn())
 
 
 //junk code:
