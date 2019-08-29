@@ -47,29 +47,27 @@ function isval (){
     return deck;
 }
 
-function oneplayerstart (){
-    let playerone = -1
-    return playerone;
+function startgame(){
+    let player1=-1;
+    let player2=-1;
+    return player1, player2;
 }
 
-function twoplayerstart (){
-    let playertwo = -1
-    return playertwo;
-}
-
-
-function takeaturnone (){
+function start (playerturn){
+    let board = isval();
+    console.log(board)
     let dice = roll();
-    let positionone = oneplayerstart();
-    positionOneEnd = positionone + dice
+    console.log(dice)
+    for (let i=0; i<dice; i++){
+        if(board[i].Value > dice){
+            playerturn++;
+            return playerturn
+        }
+        else{}
+    }
 }
 
-function takeaturntwo (positione){
-    let dice = roll();
-    let positiontwo = twoplayerstart();
-}
-
-console.log()
+console.log(start(0))
 
 
 //junk code:
@@ -112,4 +110,26 @@ console.log()
     // function game () {
     //     startgame()
     //     playeronego()
+    // }
+    
+    // function oneplayerstart (){
+    //     let playerone = -1
+    //     return playerone;
+    // }
+
+    // function twoplayerstart (){
+    //     let playertwo = -1
+    //     return playertwo;
+    // }
+
+
+    // function takeaturnone (){
+    //     let dice = roll();
+    //     let positionone = oneplayerstart();
+    //     positionOneEnd = positionone + dice
+    // }
+
+    // function takeaturntwo (positione){
+    //     let dice = roll();
+    //     let positiontwo = twoplayerstart();
     // }
