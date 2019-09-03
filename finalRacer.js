@@ -2,9 +2,13 @@ var deck = new Array();
 var suits = ["spades", "diamonds", "clubs", "hearts"];
 var values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"];
 
-function roll (){
-    let x=((Math.floor(Math.random()*6))+1);
-    return x;
+function rollred (){
+    let red=((Math.floor(Math.random()*6))+1);
+    return red;
+}
+function rollblack (){
+    let black=((Math.floor(Math.random()*6))+1);
+    return black;
 }
 
 function getDeck()
@@ -17,8 +21,8 @@ function getDeck()
 			deck.push(card);
 		}
     }
-    deck.push("jokerB");
-    deck.push("jokerR");
+    deck.push({Value: "0", Suit: ""});
+    deck.push({Value: "0", Suit: ""});
 	return deck;
 }
 
