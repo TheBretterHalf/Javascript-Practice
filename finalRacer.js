@@ -23,25 +23,40 @@ function getDeck()
     }
     deck.push({Value: "0", Suit: ""});
     deck.push({Value: "0", Suit: ""});
-	return deck;
+	//return deck;
 }
 
-console.log(getDeck())
+//console.log(getDeck())
 
-// function shuffle()
-// {
-//     //deck = getDeck()
-// 	for (var i = 0; i < 1000; i++)
-// 	{
-// 		var location1 = Math.floor((Math.random() * deck.length));
-// 		var location2 = Math.floor((Math.random() * deck.length));
-// 		var tmp = deck[location1];
+function shuffle()
+{
+	for (var i = 0; i < 1000; i++)
+	{
+		var location1 = Math.floor((Math.random() * deck.length));
+		var location2 = Math.floor((Math.random() * deck.length));
+		var tmp = deck[location1];
 
-// 		deck[location1] = deck[location2];
-// 		deck[location2] = tmp;
-//     }
-//     //return deck;
-// }
+		deck[location1] = deck[location2];
+		deck[location2] = tmp;
+    }
+    return deck;
+}
+
+function isval (){
+    getDeck();
+    //console.log('initial deck ',deck);
+    do {
+        //deck = shuffle();
+        shuffle();
+        //console.log('shuffled deck ',deck);
+    }
+    while (
+        deck[0].Value == '0' || deck[0].Value == '1' || deck[0].Value == '2' || deck[0].Value == '11' || deck[0].Value == '12' || deck[0].Value == '13' || deck[1].Value == '0' || deck[1].Value == '1' || deck[1].Value == '2' || deck[1].Value == '11' || deck[1].Value == '12' || deck[1].Value == '13' || deck[2].Value == '0' || deck[2].Value == '1' || deck[2].Value == '2' || deck[2].Value == '11' || deck[2].Value == '12' || deck[2].Value == '13' || deck[51].Value == '0' || deck[51].Value == '1' || deck[51].Value == '2' || deck[51].Value == '11' || deck[51].Value == '12' || deck[51].Value == '13' || deck[52].Value == '0' || deck[52].Value == '1' || deck[52].Value == '2' || deck[52].Value == '11' || deck[52].Value == '12' || deck[52].Value == '13' || deck[53].Value == '0' || deck[53].Value == '1' || deck[53].Value == '2' || deck[53].Value == '11' || deck[53].Value == '12' || deck[53].Value == '13'
+    )
+    return deck;
+}
+
+console.log(isval())
 
 // function isval (){
 //     getDeck();
