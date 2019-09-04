@@ -81,6 +81,8 @@ function playGame (marker){
     }
 }
 
+//put in functionality to run against deck cards.
+
 console.log(playGame(pieces));
 
 // deck = isval();
