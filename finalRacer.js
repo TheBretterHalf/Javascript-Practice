@@ -2,6 +2,8 @@ var deck = new Array();
 var suits = ["spades", "diamonds", "clubs", "hearts"];
 var values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"];
 
+const readlineSync = require('readline-sync');
+
 function rollred (){
     let red=((Math.floor(Math.random()*6))+1);
     return red;
@@ -56,29 +58,30 @@ function isval (){
     return deck;
 }
 
-console.log(isval())
+//console.log(isval());
+//make a function putting the 'markers' in an array and use the markerred/black to identify it off of that.
 
-// function isval (){
-//     getDeck();
-//     //console.log('initial deck ',deck);
-//     do {
-//         //deck = shuffle();
-//         shuffle();
-//         //console.log('shuffled deck ',deck);
-//     }
-//     while (
-//         deck[0].Value == '1' || deck[0].Value == '2' || deck[0].Value == '6' || deck[0].Value == '7' || deck[1].Value == '1' || deck[1].Value == '2' || deck[1].Value == '6' || deck[1].Value == '7' || deck[26].Value == '1' || deck[26].Value == '2' || deck[26].Value == '6' || deck[26].Value == '7' || deck[27].Value == '1' || deck[27].Value == '2' || deck[27].Value == '6' || deck[27].Value == '7'
-//     )
-//     return deck;
-// }
+var pieces = [-1,-1,-1];
 
-// //console.log(deck.length);
+function playGame (marker){
 
-// //find way of keeping board constant
-// //
-// //call the roll turn function recursively.
-// //
-// //below add player one, then player two turns to each other and set limiter to # of cards.
+    let reddice = rollred();
+    let blackdice = rollblack();
+    var markerred = readlineSync.question("Which Marker Would you Like to Move "+ reddice + " spaces?  1, 2, or 3?")
+    if ((marker[markerred-1]+reddice)<53){
+        marker[markerred-1]=marker[markerred-1]+reddice
+    }
+    var markerblack = readlineSync.question("Which Marker Would you Like to Move "+ blackdice + " spaces? 1, 2, or 3?")
+    if((marker[markerblack-1]+blackdice)<53){
+        marker[markerblack-1]=marker[markerblack-1]+blackdice
+    }
+    if (marker[0]<53 || marker[1]<53 || marker[2]<53){
+        console.log(marker)
+        playGame(marker);
+    }
+}
+
+console.log(playGame(pieces));
 
 // deck = isval();
 
