@@ -62,15 +62,24 @@ function isval (){
 //make a function putting the 'markers' in an array and use the markerred/black to identify it off of that.
 
 var pieces = [-1,-1,-1];
-
+isval();
+console.log(deck);
 function playGame (marker){
-
-    let reddice = rollred();
-    let blackdice = rollblack();
+    var reddice = rollred();
+    var blackdice = rollblack();
     var markerred = readlineSync.question("Which Marker Would you Like to Move "+ reddice + " spaces?  1, 2, or 3?")
-    if ((marker[markerred-1]+reddice)<53){
-        marker[markerred-1]=marker[markerred-1]+reddice
-    }
+    //fix this function, right now it is altering the markerred value and should be adding i to the total in deck.
+
+    // if ((marker[markerred-1]+reddice)<53){
+    //     for (let i=0; i<reddice; i++){
+    //         if(deck[markerred].Value < (reddice+blackdice)){
+    //             marker[markerred-1]=marker[markerred-1]+i
+    //         }
+    //         else{
+    //             break;
+    //         }
+    //     }
+    // }
     var markerblack = readlineSync.question("Which Marker Would you Like to Move "+ blackdice + " spaces? 1, 2, or 3?")
     if((marker[markerblack-1]+blackdice)<53){
         marker[markerblack-1]=marker[markerblack-1]+blackdice
@@ -80,6 +89,16 @@ function playGame (marker){
         playGame(marker);
     }
 }
+
+// for (let i=0; i<reddice; i++){
+//     if(deck[i+markerred].Value < (reddice+blackdice)){
+//         marker[markerred-1]=marker[markerred-1]+i
+//     }
+//     else{
+//         break;
+//     }
+// }
+
 
 //put in functionality to run against deck cards.
 
