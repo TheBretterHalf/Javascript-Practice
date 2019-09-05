@@ -74,4 +74,4 @@ function withdrawl (deposit, month, withdrawl, monthW){
     }
 }
 
-console.log(depositMonthly(100,4,100,4))
+console.log(withdrawl(100,4,100,4))
