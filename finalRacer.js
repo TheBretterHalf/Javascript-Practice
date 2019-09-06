@@ -69,20 +69,32 @@ function playGame (marker){
     var blackdice = rollblack();
     var markerred = readlineSync.question("Which Marker Would you Like to Move "+ reddice + " spaces?  1, 2, or 3?")
     //fix this function, right now it is altering the markerred value and should be adding i to the total in deck.
-
-    // if ((marker[markerred-1]+reddice)<53){
-    //     for (let i=0; i<reddice; i++){
-    //         if(deck[markerred].Value < (reddice+blackdice)){
-    //             marker[markerred-1]=marker[markerred-1]+i
-    //         }
-    //         else{
-    //             break;
-    //         }
-    //     }
-    // }
+    let valCurrentMarkerred = marker[markerred-1];
+    if ((valCurrentMarkerred+reddice)<53){
+        for (let i=1; i<=reddice; i++){
+            if(deck[i+valCurrentMarkerred].Value < (reddice+blackdice)){
+                marker[markerred-1]=valCurrentMarkerred+1
+            }
+            else{
+                break;
+            }
+        }
+    }
     var markerblack = readlineSync.question("Which Marker Would you Like to Move "+ blackdice + " spaces? 1, 2, or 3?")
-    if((marker[markerblack-1]+blackdice)<53){
-        marker[markerblack-1]=marker[markerblack-1]+blackdice
+    let valCurrentMarkerblack = marker[markerblack-1];
+    if ((valCurrentMarkerblack+blackdice)<53){
+        for (let i=1; i<=blackdice; i++){
+            if(deck[i+valCurrentMarkerblack].Value < (reddice+blackdice)){
+                marker[markerblack-1]=valCurrentMarkerblack+1
+            }
+            //work on adding a +1 to inital value
+            //maybe a flag that breaks true on first iteration
+            //only allow +1 once
+            
+            else{
+                break;
+            }
+        }
     }
     if (marker[0]<53 || marker[1]<53 || marker[2]<53){
         console.log(marker)
