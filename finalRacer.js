@@ -4,47 +4,52 @@ var values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13
 
 const readlineSync = require('readline-sync');
 
-function rollred (){
-    let red=((Math.floor(Math.random()*6))+1);
+function rollred() {
+    let red = ((Math.floor(Math.random() * 6)) + 1);
     return red;
 }
-function rollblack (){
-    let black=((Math.floor(Math.random()*6))+1);
+
+function rollblack() {
+    let black = ((Math.floor(Math.random() * 6)) + 1);
     return black;
 }
 
-function getDeck()
-{
-	for(var i = 0; i < suits.length; i++)
-	{
-		for(var x = 0; x < values.length; x++)
-		{
-			var card = {Value: values[x], Suit: suits[i]};
-			deck.push(card);
-		}
+function getDeck() {
+    for (var i = 0; i < suits.length; i++) {
+        for (var x = 0; x < values.length; x++) {
+            var card = {
+                Value: values[x],
+                Suit: suits[i]
+            };
+            deck.push(card);
+        }
     }
-    deck.push({Value: "0", Suit: ""});
-    deck.push({Value: "0", Suit: ""});
-	//return deck;
+    deck.push({
+        Value: "0",
+        Suit: ""
+    });
+    deck.push({
+        Value: "0",
+        Suit: ""
+    });
+    //return deck;
 }
 
 //console.log(getDeck())
 
-function shuffle()
-{
-	for (var i = 0; i < 1000; i++)
-	{
-		var location1 = Math.floor((Math.random() * deck.length));
-		var location2 = Math.floor((Math.random() * deck.length));
-		var tmp = deck[location1];
+function shuffle() {
+    for (var i = 0; i < 1000; i++) {
+        var location1 = Math.floor((Math.random() * deck.length));
+        var location2 = Math.floor((Math.random() * deck.length));
+        var tmp = deck[location1];
 
-		deck[location1] = deck[location2];
-		deck[location2] = tmp;
+        deck[location1] = deck[location2];
+        deck[location2] = tmp;
     }
     return deck;
 }
 
-function isval (){
+function isval() {
     getDeck();
     //console.log('initial deck ',deck);
     do {
@@ -61,42 +66,43 @@ function isval (){
 //console.log(isval());
 //make a function putting the 'markers' in an array and use the markerred/black to identify it off of that.
 
-var pieces = [-1,-1,-1];
+var pieces = [-1, -1, -1];
 isval();
 console.log(deck);
-function playGame (marker){
+
+function playGame(marker) {
     var reddice = rollred();
     var blackdice = rollblack();
-    var markerred = readlineSync.question("Which Marker Would you Like to Move "+ reddice + " spaces?  1, 2, or 3?")
+    var markerred = readlineSync.question("Which Marker Would you Like to Move " + reddice + " spaces?  1, 2, or 3?")
     //fix this function, right now it is altering the markerred value and should be adding i to the total in deck.
-    let valCurrentMarkerred = marker[markerred-1];
-    if ((valCurrentMarkerred+reddice)<53){
-        for (let i=1; i<=reddice; i++){
-            if(deck[i+valCurrentMarkerred].Value < (reddice+blackdice)){
-                marker[markerred-1]=valCurrentMarkerred+1
-            }
-            else{
+    let valCurrentMarkerred = marker[markerred - 1];
+    if ((valCurrentMarkerred + reddice) < 53) {
+        for (let i = 1; i <= reddice; i++) {
+            if (deck[i + valCurrentMarkerred].Value < (reddice + blackdice)) {
+                marker[markerred - 1] = valCurrentMarkerred + 1
+            } else {
+                marker[markerred - 1] = valCurrentMarkerred + 1
                 break;
             }
         }
     }
-    var markerblack = readlineSync.question("Which Marker Would you Like to Move "+ blackdice + " spaces? 1, 2, or 3?")
-    let valCurrentMarkerblack = marker[markerblack-1];
-    if ((valCurrentMarkerblack+blackdice)<53){
-        for (let i=1; i<=blackdice; i++){
-            if(deck[i+valCurrentMarkerblack].Value < (reddice+blackdice)){
-                marker[markerblack-1]=valCurrentMarkerblack+1
+    var markerblack = readlineSync.question("Which Marker Would you Like to Move " + blackdice + " spaces? 1, 2, or 3?")
+    let valCurrentMarkerblack = marker[markerblack - 1];
+    if ((valCurrentMarkerblack + blackdice) < 53) {
+        for (let i = 1; i <= blackdice; i++) {
+            if (deck[i + valCurrentMarkerblack].Value < (reddice + blackdice)) {
+                marker[markerblack - 1] = valCurrentMarkerblack + 1
             }
             //work on adding a +1 to inital value
             //maybe a flag that breaks true on first iteration
             //only allow +1 once
-            
-            else{
+            else {
+                marker[markerblack - 1] = valCurrentMarkerblack + 1
                 break;
             }
         }
     }
-    if (marker[0]<53 || marker[1]<53 || marker[2]<53){
+    if (marker[0] < 53 || marker[1] < 53 || marker[2] < 53) {
         console.log(marker)
         playGame(marker);
     }
