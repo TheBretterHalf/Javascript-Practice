@@ -13,7 +13,6 @@ public class Die
     //sides value color
     //defining attributes, public can be accessed outside class and private can only be accessed within the method
     public int val;
-
     private int sides;
     public int color;
     public Die(int sides, int color)
@@ -35,6 +34,10 @@ public class Die
         this.sides = 6;
         this.val = 1;
     }
+    public void Roll(Random rand)
+    {
+        this.val = rand.Next(1, this.sides + 1);
+    }
 }
 
 //where program is being run, or rather main function space think C
@@ -43,12 +46,22 @@ public class Program
     public static void Main()
     {
         Die redDie = new Die(6, 0xFF0000);
-        //var tells the compiler what data type it should be at compilation
-        var blackDie = newDie();
-        Die bigDie = new Die(100);
 
-        Console.WriteLine("redDie: " + redDie.val)
-        Console.WriteLine("blackDie: " + blackDie.val)
-        Console.WriteLine("bigDie: " + bigDie.val)
+        //var tells the compiler what data type it should be at compilation
+        var blackDie = new Die(6, 0x000000);
+        var rand = new Random();
+
+        // Console.WriteLine("redDie: " + redDie.val);
+        // Console.WriteLine("blackDie: " + blackDie.val);
+        // Console.WriteLine("bigDie: " + bigDie.val);
+
+        // redDie.Roll(rand);
+        // blackDie.Roll(rand);
+        // bigDie.Roll(rand);
+
+        // Console.WriteLine("AftertheRoll");
+        // Console.WriteLine("redDie: " + redDie.val);
+        // Console.WriteLine("blackDie: " + blackDie.val);
+        // Console.WriteLine("bigDie: " + bigDie.val);
     }
 }
