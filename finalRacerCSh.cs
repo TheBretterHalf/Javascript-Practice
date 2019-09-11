@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 
 //possible classes:
-//Die
+//Die   x
 //Deck
 //Card
 //Player
@@ -40,6 +41,48 @@ public class Die
     }
 }
 
+public class Card
+{
+    public int val;
+    public int suit;
+    private Dictionary<int, string> suitMap = new Dictionary<int, string> {
+        {0, "\u2663"},
+        {1, "\u2660"},
+        {2, "\u2665"},
+        {3, "\u2666"}
+    };
+    private Dictionary<int, string> valMap = new Dictionary<int, string>{
+        {1, "Ac"},
+        {10, "10"},
+        {11, "Ja"},
+        {12, "Qu"},
+        {13, "Ki"}
+    };
+    //methods are identified by capitol letters
+    public string Display()
+    {
+        if (this.val == 0)
+        {
+            return "Jkr";
+        }
+
+        if (this.valMap.ContainsKey(this.val))
+        {
+            return this.suitMap[this.suit] + this.valMap[this.val];
+        }
+
+        return this.suitMap[this.suit] + "0" + this.val;
+    }
+
+    public Card(int val, int suit)
+    {
+        this.val = val;
+        this.suit = suit;
+
+    }
+
+}
+
 //where program is being run, or rather main function space think C
 public class Program
 {
@@ -63,5 +106,8 @@ public class Program
         // Console.WriteLine("redDie: " + redDie.val);
         // Console.WriteLine("blackDie: " + blackDie.val);
         // Console.WriteLine("bigDie: " + bigDie.val);
+
+        Card aCard = new Card(11, 0);
+        Console.WriteLine("the card is {0}", aCard.Display());
     }
 }
