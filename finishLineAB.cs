@@ -3,58 +3,59 @@ using System.Collections.Generic;
 
 // possible classes
 // die X
-// deck
+// deck x
 // card X
-// player
-// marker
+// player x
+// marker x
+//FLMarker /
 // game or board
 
 public class Die
 {
-  // sides value color
-  public int val;
-  private int sides;
-  public int color;
+    // sides value color
+    public int val;
+    private int sides;
+    public int color;
 
-  public Die(int sides, int color, Random rand)
-  {
-    this.sides = sides;
-    this.color = color;
-    this.val = 1;
-  }
-  public Die(int sides)
-  {
-    this.sides = sides;
-    this.val = 1;
-  }
-  public Die()
-  {
-    this.sides = 6;
-    this.val = 1;
-  }
+    public Die(int sides, int color, Random rand)
+    {
+        this.sides = sides;
+        this.color = color;
+        this.val = 1;
+    }
+    public Die(int sides)
+    {
+        this.sides = sides;
+        this.val = 1;
+    }
+    public Die()
+    {
+        this.sides = 6;
+        this.val = 1;
+    }
 
 
 
-  // modify the existing class
-  public void Roll(Random rand)
-  {
-    this.val = rand.Next(1, this.sides + 1);
-  }
+    // modify the existing class
+    public void Roll(Random rand)
+    {
+        this.val = rand.Next(1, this.sides + 1);
+    }
 }
 
 public class Card
 {
 
-  public int suit;
-  public int val;
-  private Dictionary<int, string> suitMap = new Dictionary<int, string>
+    public int suit;
+    public int val;
+    private Dictionary<int, string> SUIT_Map = new Dictionary<int, string>
   {
     {0, "\u2663"},
     {1, "\u2660"},
     {2, "\u2265"},
     {3, "\u2666"}
   };
-  private Dictionary<int, string> valMap = new Dictionary<int, string>
+    private Dictionary<int, string> VAL_Map = new Dictionary<int, string>
   {
     {1, "Ac"},
     {10, "10"},
@@ -63,26 +64,26 @@ public class Card
     {13, "Ki"}
   };
 
-  public Card(int val, int suit)
-  {
-    this.val = val;
-    this.suit = suit;
-  }
-
-  public string Display()
-  {
-    if (this.val == 0)
+    public Card(int val, int suit)
     {
-      return "Jkr";
+        this.val = val;
+        this.suit = suit;
     }
 
-    if (this.valMap.ContainsKey(this.val))
+    public string Display()
     {
-      return this.suitMap[this.suit] + this.valMap[this.val];
-    }
+        if (this.val == 0)
+        {
+            return "Jkr";
+        }
 
-    return this.suitMap[this.suit] + "0" + this.val;
-  }
+        if (this.VAL_Map.ContainsKey(this.val))
+        {
+            return this.SUIT_Map[this.suit] + this.VAL_Map[this.val];
+        }
+
+        return this.SUIT_Map[this.suit] + "0" + this.val;
+    }
 }
 
 public class Deck
@@ -91,81 +92,120 @@ public class Deck
 
     public Deck(int[] suits, int[] values, int numJokers)
     {
-        foreach(var suit in suits)
+        foreach (var suit in suits)
         {
-            foreach(var val in values)
+            foreach (var val in values)
             {
                 var newCard = new Card(val, suit);
                 this.cards.Add(newCard);
             }
         }
 
-    public void Shuffle(Random rand)
-    {
-        for( int index = this.cards.Count - 1; index > 0; index--)
+        public void Shuffle(Random rand)
         {
-            int position = rand.Next(index + 1);
-            Card temp = this.cards[index];
-            this.cards[index] = this.cards[position];
-            this.cards[position] = temp;
+            for (int index = this.cards.Count - 1; index > 0; index--)
+            {
+                int position = rand.Next(index + 1);
+                Card temp = this.cards[index];
+                this.cards[index] = this.cards[position];
+                this.cards[position] = temp;
+            }
         }
     }
-}
-  
-public class Marker
-{
-    public int position;
-    public string name;
-    public bool stopped;
 
-    public Marker(string name)
+    public class Marker
     {
-        this.position = -1;
-        this.name = name;
-        this.stopped = false;
-    }
-    public void move() { }
-}
-  
-public class Player
-{
-    public Marker[] markers;
-    public string name;
-    public Player(string name, string[] markerNames)
-    {
-        this.markers = new Marker[markerNames.Length];
-        this.name = name;
-        for (int markerName = 0; markerName < markerNames.Length; markerName++)
+        public int position;
+        public string name;
+        //public bool stopped;
+
+        public Marker(string name)
         {
-            this.markers[markerName] = new Marker(markerNames[markerName]);
+            this.position = -1;
+            this.name = name;
+            //this.stopped = false;
+        }
+
+        public virtual void Move(int spaces)
+        {
+            this.position += spaces;
         }
     }
-}
 
-public class Program
-{
-  public static void Main()
-  {
-    Die redDie = new Die(6, 0xFF0000);
-    var blackDie = new Die();
-    var rand = new Random();
+    public class FLMarker : Marker
+    {
+        public bool stopped;
+        public FLMarker(string name) : base(name)
+        {
+            this.stopped = false;
+        }
 
-    Card aCard = new Card(0, -1);
-    Console.WriteLine("The card is {0}", aCard.Display());
+        public override void Move(int spaces, int stopValue)
+        {
+            //preprocessing
+            this.base.Move();
+            //postprocessing
+        }
+    }
 
-    // Console.WriteLine("redDie: " + redDie.val);
-    // Console.WriteLine("blackDie: {0} {0}", blackDie.val);
-    // Console.WriteLine("bigDie: " + bigDie.val);
+    public class Player
+    {
+        public Marker[] markers;
+        public string name;
+        public Player(string name, string[] markerNames)
+        {
+            this.markers = new Marker[markerNames.Length];
+            this.name = name;
+            for (int markerName = 0; markerName < markerNames.Length; markerName++)
+            {
+                this.markers[markerName] = new Marker(markerNames[markerName]);
+            }
+        }
+    }
 
-    // redDie.Roll(rand);
-    // blackDie.Roll(rand);
-    // bigDie.Roll(rand);
+    public class FinishLine
+    {
+        private int[] SUITS = new int[] { 0, 1, 2, 3 };
+        private int[] VALUES = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 10 }
+
+        public Deck deck;
+        public Die redDie;
+        public Die blackDie;
+        public Player player1;
+        public int players;
+        public Random Rand;
 
 
-    // Console.WriteLine("After the roll");
-    // Console.WriteLine("redDie: " + redDie.val);
-    // Console.WriteLine("blackDie: {0} {0}", blackDie.val);
-    // Console.WriteLine("bigDie: " + bigDie.val);
+    }
 
-  }
-}
+    public class Program
+    {
+        public static void Main()
+        {
+            Die redDie = new Die(6, 0xFF0000);
+            var blackDie = new Die();
+            var rand = new Random();
+
+            Card aCard = new Card(0, -1);
+            Console.WriteLine("The card is {0}", aCard.Display());
+
+            // Console.WriteLine("redDie: " + redDie.val);
+            // Console.WriteLine("blackDie: {0} {0}", blackDie.val);
+            // Console.WriteLine("bigDie: " + bigDie.val);
+
+            // redDie.Roll(rand);
+            // blackDie.Roll(rand);
+            // bigDie.Roll(rand);
+
+
+            // Console.WriteLine("After the roll");
+            // Console.WriteLine("redDie: " + redDie.val);
+            // Console.WriteLine("blackDie: {0} {0}", blackDie.val);
+            // Console.WriteLine("bigDie: " + bigDie.val);
+
+        }
+    }
+
+    //overrides are child classes
+    //virtual are parent classes being overrided
+    //overloads are child classes passing different parameters
