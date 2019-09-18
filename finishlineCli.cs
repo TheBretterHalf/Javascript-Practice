@@ -163,6 +163,22 @@ public class Player
             this.markers[markerName] = new Marker(markerNames[markerName]);
         }
     }
+
+    public string HasMarkersAt(int position)
+    {
+        foreach (var marker in this.markers)
+        {
+            if (marker.position == position)
+            {
+                master += marker.name;
+            }
+            else
+            {
+                master += " ";
+            }
+        }
+        return master;
+    }
 }
 
 public class FinishLine
@@ -193,18 +209,28 @@ public class FinishLine
 
     public void DisplayBoard()
     {
+        Console.Clear();
         //how to display
         //[SW]\t[SW] [SW]
+        //player one row
         string master = "";
+        string cardRow = "\t";
+        string playerRow = "\t";
         int counter = 0;
         foreach (Card card in this.deck.cards)
         {
-            master += "[" + card.Display() + "]\t";
+            master += "[" + card.Display() + "]";
+            playerRow += " " + this.player1.HasMarkersAt(counter)
             counter++;
-            if (counter == 9)
+            if (counter % 9 == 0)
             {
                 counter = 0;
-                master += "\n\n\t";
+                master += cardRow + "\n" + playerRow + "\n\n";
+                cardRow = "\t";
+            }
+            else
+            {
+                cardRow += "\t";
             }
         }
         Console.WriteLine(master);
