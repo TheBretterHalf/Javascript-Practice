@@ -148,6 +148,7 @@ public class FLMarker : Marker
             if (gameDeck.cards[this.position + count].val >= stopValue)
             {
                 Move(count);
+                return;
             }
         }
         // preprocessing
