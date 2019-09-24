@@ -123,7 +123,7 @@ public class Marker
 
     public Marker(string name)
     {
-        this.position = 12;
+        this.position = -1;
         this.name = name;
     }
 
@@ -141,8 +141,15 @@ public class FLMarker : Marker
         this.stopped = false;
     }
 
-    public void Move(int spaces, int stopValue)
+    public void Move(int spaces, int stopValue, Deck gameDeck)
     {
+        for (int count = 1; count <= spaces; count++)
+        {
+            if (gameDeck.cards[this.position + count].val >= stopValue)
+            {
+                Move(count);
+            }
+        }
         // preprocessing
         this.Move(spaces);
         // postprocess
@@ -151,16 +158,16 @@ public class FLMarker : Marker
 
 public class Player
 {
-    public Marker[] markers;
+    public FLMarker[] markers;
     public string name;
 
     public Player(string name, string[] markerNames)
     {
-        this.markers = new Marker[markerNames.Length];
+        this.markers = new FLMarker[markerNames.Length];
         this.name = name;
         for (int markerName = 0; markerName < markerNames.Length; markerName++)
         {
-            this.markers[markerName] = new Marker(markerNames[markerName]);
+            this.markers[markerName] = new FLMarker(markerNames[markerName]);
         }
     }
 
@@ -188,7 +195,7 @@ public class FinishLine
     private readonly int[] VALUES = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
     private static int NUM_JOKERS = 2;
     private readonly string[] MARKER_NAMES = new string[] { "A", "B", "C" };
-
+    private readonly int[] RESTRICTED_VALUES = new int[] { 0, 1, 2, 11, 12, 13 };
     public Deck deck;
     public Die redDie;
     public Die blackDie;
@@ -205,6 +212,7 @@ public class FinishLine
         this.redDie = new Die(6, 0xFF0000);
         this.blackDie = new Die(6, 0x000000);
         this.deck.Shuffle(rand);
+        ValidateDeck();
         this.redDie.Roll(rand);
         this.blackDie.Roll(rand);
     }
@@ -214,6 +222,9 @@ public class FinishLine
         // how to display
         // \t[SVV]\t[SVV] [SVV] [SVV]
         // \t_MMM_\t_MMM
+
+
+
         // ABC
         // AB
         // BC
@@ -224,6 +235,14 @@ public class FinishLine
         string master = "";
         string cardRow = "\t";
         string playerRow = "\t";
+
+        cardRow += "Player1";
+        playerRow += this.player1.HasMarkersAt(-1);
+
+        master += cardRow + "\n" + playerRow + "\n\n";
+        cardRow = "\t";
+        playerRow = "\t";
+
         int counter = 0;
         foreach (Card card in this.deck.cards)
         {
@@ -245,13 +264,42 @@ public class FinishLine
         Console.WriteLine(master);
     }
 
-}
+    public void ValidateCard(int position)
+    {
+        if (Array.IndexOf(RESTRICTED_VALUES, this.deck.cards[position].val) >= 0)
+        {
+            while (true)
+            {
+                int newPosition = this.rand.Next(3, 51);
+                if (Array.IndexOf(RESTRICTED_VALUES, this.deck.cards[newPosition].val) >= 0)
+                {
+                    continue;
+                }
+                Card temp = this.deck.cards[position];
+                this.deck.cards[position] = this.deck.cards[newPosition];
+                this.deck.cards[newPosition] = temp;
+                break;
+            }
+        }
+    }
 
+    public void ValidateDeck()
+    {
+        int[] RESTRICTED_POSITIONS = new int[] { 0, 1, 2, 51, 52, 53 };
+        foreach (int position in RESTRICTED_POSITIONS)
+        {
+            ValidateCard(position);
+        }
+
+    }
+}
 public class Program
 {
     public static void Main()
     {
         var game = new FinishLine(1, "player1");
+        game.DisplayBoard();
+        game.player1.markers[0].Move(10, 10, game.deck);
         game.DisplayBoard();
     }
 }
