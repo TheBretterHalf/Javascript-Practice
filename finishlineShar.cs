@@ -336,10 +336,10 @@ namespace Finish_Line
             GetMarker("Red", redDie, player, stopValue, master);
             GetMarker("Black", blackDie, player, stopValue, master);
 
-            if (player.HasMarkersAt(53) == "ABC")
-            {
-                Console.WriteLine("You Win");
-            }
+            //if (player.HasMarkersAt(53) == "ABC")
+            //{
+            //    Console.WriteLine("You Win");
+            //}
         }
         public void GetMarker(string dieName, Die die, Player player, int stopValue, string master)
         {
@@ -353,19 +353,37 @@ namespace Finish_Line
 
 
 
-        public void Round()
+        public Player Round()
         {
             //todo: loop through players
             Turn(player1);
+            if (DidWin(player1))
+            {
+                return player1;
+            }
+
+            return null;
+            //didWin(player)
+            return null;
         }
 
         public void PlayGame()
         {
             while (true)
             {
-                Round();
+                Player winner = Round();
+                if (Round() != null)
+                {
+                    Console.WriteLine("Congrats {0}! You win!", winner.name);
+                }
+
                 //break;
             }
+        }
+
+        private bool DidWin(Player player)
+        {
+            return player.HasMarkersAt(53) == "ABC";
         }
     }
 
