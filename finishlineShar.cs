@@ -230,12 +230,13 @@ namespace Finish_Line
         public Die redDie;
         public Die blackDie;
         public Player player1;
-        public int players;
+        public int numPlayers;
+        public Player[] players;
         public Random rand;
 
-        public FinishLine(int players, string player1Name)
+        public FinishLine(int numPlayers, string player1Name)
         {
-            this.players = players;
+            this.numPlayers = numPlayers;
             this.player1 = new Player(player1Name, this.MARKER_NAMES);
             this.rand = new Random();
             this.deck = new Deck(this.VALUES, this.SUITS, NUM_JOKERS);
