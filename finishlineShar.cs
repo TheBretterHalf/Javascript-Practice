@@ -234,10 +234,15 @@ namespace Finish_Line
         public Player[] players;
         public Random rand;
 
-        public FinishLine(int numPlayers, string player1Name)
+        public FinishLine(int numPlayers, string[] playerNames)
         {
             this.numPlayers = numPlayers;
-            this.player1 = new Player(player1Name, this.MARKER_NAMES);
+            this.players = new Player[numPlayers];
+            for (int counter = 0; counter < numPlayers; counter++)
+            {
+                this.players[counter] = new Player(playerNames[counter], MARKER_NAMES);
+            }
+            //this.player1 = new Player(player1Name, this.MARKER_NAMES);
             this.rand = new Random();
             this.deck = new Deck(this.VALUES, this.SUITS, NUM_JOKERS);
             this.redDie = new Die(6, 0xFF0000);
@@ -246,6 +251,14 @@ namespace Finish_Line
             ValidateDeck();
             this.redDie.Roll(rand);
             this.blackDie.Roll(rand);
+        }
+
+        private void initializePlayerRow(string[] playerRow)
+        {
+            for (int count = 0; count < this.numPlayers; count++)
+            {
+                playerRow[count] = "\t";
+            }
         }
 
         public void DisplayBoard()
@@ -265,31 +278,51 @@ namespace Finish_Line
             Console.Clear();
             string master = "";
             string cardRow = "\t";
-            string playerRow = "\t";
+            string[] playerRow = new string[this.numPlayers];
+            playerRow[0] = "\t";
 
-            cardRow += "Player1";
-            playerRow += this.player1.HasMarkersAt(-1);
+            foreach (var player in players)
+            {
+                cardRow += player.name + "\t";
+                playerRow[0] += player.HasMarkersAt(-1) + "\t";
+            }
+            //cardRow += "Player1";
+            //
+            //playerRow += this.player1.HasMarkersAt(-1);
 
-            master += cardRow + "\n" + playerRow + "\n\n";
+            master += cardRow + "\n" + playerRow[0] + "\n\n";
             cardRow = "\t";
-            playerRow = "\t";
-
+            initializePlayerRow(playerRow);
+            //go thru board
             int counter = 0;
             foreach (Card card in this.deck.cards)
             {
                 cardRow += "|" + card.Display() + "|";
-                playerRow += " " + this.player1.HasMarkersAt(counter) + " ";
+                for (var count = 0; count < this.numPlayers; count++)
+                {
+                    playerRow[count] += " " + this.players[count].HasMarkersAt(counter) + " ";
+                }
+                //playerRow += " " + this.player1.HasMarkersAt(counter) + " ";
                 counter++;
                 if (counter % 9 == 0)
                 {
-                    master += cardRow + "\n" + playerRow + "\n\n";
+                    master += cardRow + "\n";
+                    for (int count = 0; count < this.numPlayers; count++)
+                    {
+                        master += playerRow[count] + "\n";
+                    }
+                    master += "\n";
                     cardRow = "\t";
-                    playerRow = "\t";
+                    initializePlayerRow(playerRow);
                 }
                 else
                 {
                     cardRow += "\t";
-                    playerRow += "\t";
+                    for (var count = 0; count < this.numPlayers; count++)
+                    {
+                        playerRow[count] += " " + this.players[count].HasMarkersAt(counter) + " ";
+                    }
+                    //playerRow += "\t";
                 }
             }
 
@@ -357,15 +390,20 @@ namespace Finish_Line
         public Player Round()
         {
             //todo: loop through players
-            Turn(player1);
-            if (DidWin(player1))
+            foreach (var player in players)
             {
-                return player1;
+                Turn(player);
+                if (DidWin(player))
+                    return player;
             }
-
+            //Turn(player1);
+            //if (DidWin(player1))
+            //{
+            //    return player1;
+            //}
             return null;
-            //didWin(player)
-            return null;
+            ////didWin(player)
+            //return null;
         }
 
         public void PlayGame()
@@ -392,7 +430,7 @@ namespace Finish_Line
     {
         public static void Main(string[] args)
         {
-            var game = new FinishLine(1, "Player1");
+            var game = new FinishLine(2, new string[] { "Cliff", "Joe" });
             game.PlayGame();
         }
     }
